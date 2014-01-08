@@ -2,7 +2,7 @@
 
 Simple python script which uses PySphere to fill the Ansible inventory from VMWare vCenter.
 
-[Github repository](https://github.com/RaymiiOrg/ansible-vmware)  
+[Github repository](https://github.com/RaymiiOrg/ansible-vmware)  =
 [Official Website](https://raymii.org/s/software/Ansible__Dynamic_Inventory_From_VMware_vCenter.html)
 
 ### Installation
@@ -26,19 +26,19 @@ Get all powered on VM's:
 
 Output:
 
-{
-    "no_group": {
-        "hosts": [
-            "vm0031",
-            "vm0032",
-            [...]
-            "vm0999"
-        ]
-    },
-    "local": [
-        "127.0.0.1"
-    ]
-}
+	{
+	    "no_group": {
+	        "hosts": [
+	            "vm0031",
+	            "vm0032",
+	            [...]
+	            "vm0999"
+	        ]
+	    },
+	    "local": [
+	        "127.0.0.1"
+	    ]
+	}
 
 Get one VM:
 
