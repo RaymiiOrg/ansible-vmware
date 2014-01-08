@@ -2,6 +2,9 @@
 
 Simple python script which uses PySphere to fill the Ansible inventory from VMWare vCenter.
 
+[Github repository](https://github.com/RaymiiOrg/ansible-vmware)
+[Official Website](https://raymii.org/s/software/Ansible__Dynamic_Inventory_From_VMware_vCenter.html)
+
 ### Installation
 
 Install PySphere:
