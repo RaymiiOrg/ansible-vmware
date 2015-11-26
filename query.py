@@ -17,14 +17,20 @@
 import pysphere 
 import re
 import sys
+import argparse
+
+
 try:
     import json
 except ImportError:
     import simplejson as json
 
-server_fqdn = "vcenter.example.org"
-server_username = "jdoe"
-server_password = "secure_passw0rd"
+server_fqdn = ""
+server_username = ""
+server_password = ""
+
+
+
 
 def vcenter_connect(server_fqdn, server_username, server_password):
     vserver = pysphere.VIServer()
@@ -73,10 +79,53 @@ def grouplist():
     print json.dumps(inventory, indent=4)
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2 and (sys.argv[1] == '--list'):
-        grouplist()
-    elif len(sys.argv) == 3 and (sys.argv[1] == '--host'):
-        hostinfo(sys.argv[2])
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-s', '--server', help='fqdn of vsphere server',
+            action='store', required='True')
+    parser.add_argument('-u', '--username', help='your vsphere username',
+            action='store', required='True')
+    parser.add_argument('-p', '--password', help='your vsphere password',
+            action='store')
+    parser.add_argument('-l', '--list', help='List all guest VMs', 
+            action='store_true')
+    parser.add_argument('-g', '--guest', help='Print a single guest', 
+            action='store')
+    parser.add_argument('-n', '--no-ssl-verify', 
+        help="Do not do SSL Cert Validation", action='store_true')
+    
+    args = parser.parse_args()
+    if args.no_ssl_verify is True:
+        import ssl
+        try:
+            _create_unverified_https_context = ssl._create_unverified_context
+        except AttributeError:
+            # Legacy Python that doesn't verify HTTPS certificates by default
+            pass
+        else:
+            # Handle target environment that doesn't support HTTPS verification
+            ssl._create_default_https_context = _create_unverified_https_context
+
+    if args.server:
+        server_fqdn = args.server
+
+    if args.username:
+        server_username = args.username
+
+    if args.password:
+        server_password = args.password
     else:
-        print "Usage: %s --list or --host <hostname>" % sys.argv[0]
+        import getpass
+        server_password = getpass.getpass()
+
+    if (server_fqdn, server_username, server_password):
+
+        if args.list:
+            grouplist()
+        elif args.guest:
+            hostinfo(args.guest)
+        else:
+            parser.print_help()
+            sys.exit(1)
+    else:
+        parser.print_help()
         sys.exit(1)

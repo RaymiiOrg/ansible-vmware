@@ -1,9 +1,12 @@
 # Ansible Inventory from VMWare
 
 Simple python script which uses PySphere to fill the Ansible inventory from VMWare vCenter.
-
-[Github repository](https://github.com/RaymiiOrg/ansible-vmware)  =
+Originally Cloned from: [Github repository](https://github.com/RaymiiOrg/ansible-vmware)  =
 [Official Website](https://raymii.org/s/software/Ansible__Dynamic_Inventory_From_VMware_vCenter.html)
+
+My fork has added an option to override the strict SSL Cert Validation:
+https://www.python.org/dev/peps/pep-0476/ as well as command line option parsing
+with argparse.
 
 ### Installation
 
